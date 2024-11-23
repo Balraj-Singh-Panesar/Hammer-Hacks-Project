@@ -10,7 +10,18 @@ body {
     background-color: #ffffff;
   }
 
+  .calendar-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+  }
   
+  .calendar-header h2 {
+    margin: 0 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+  }
   .calendar-container {
     display: flex;
     align-items: center;
@@ -83,18 +94,7 @@ body {
     background: #d50000;
   }
 
-  .calendar-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .calendar-header h2 {
-    margin: 0 20px;
-    font-size: 1.5em;
-    font-weight: bold;
-  }
+
   
   .day.today {
     background-color: #ff3131;
