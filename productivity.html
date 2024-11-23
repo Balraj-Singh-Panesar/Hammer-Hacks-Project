@@ -7,17 +7,20 @@
   <link rel="stylesheet" href="productivityStyles.css">
 </head>
 <body>
+  <div>
         <div class="calendar-header">
-            <button class="scroll-btn" onclick="navigateMonth(-1)">&#9664;</button>
-            <h2 id="monthYear"></h2>
-            <button class="scroll-btn" onclick="navigateMonth(1)">&#9654;</button>
+            <img src = "images/SlideButton.png" class = "scroll-btn left" onclick="navigateMonth(-1)">
+              <h2 id="monthYear"></h2>
+            <img src = "images/SlideButton.png" class = "scroll-btn right" onclick="navigateMonth(-1)">
+
         </div>
         
         <div class="calendar-container">
-            <button class="scroll-btn left" onclick="scrollCalendar(-1)">&#9664;</button>
+            <img src = "images/SlideButton.png" class = "scroll-btn left" onclick="scrollCalendar(-1)">
             <div class="calendar" id="calendar"></div>
-            <button class="scroll-btn right" onclick="scrollCalendar(1)">&#9654;</button>
+            <img src = "images/SlideButton.png" class = "scroll-btn right" onclick="scrollCalendar(1)">
         </div>
+      </div>
   <script src="https://cdn.jsdelivr.net/npm/date-fns@latest"></script>
   <script src="script.js"></script>
 </body>
