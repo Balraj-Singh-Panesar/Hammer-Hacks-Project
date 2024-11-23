@@ -1,78 +1,68 @@
-// script.js
-const { startOfWeek, endOfWeek, addDays, format, addWeeks, startOfMonth, endOfMonth, isSameDay, isToday } = dateFns;
+const calendarGrid = document.getElementById('calendar-grid');
+const monthYearDisplay = document.getElementById('month-year');
+const currentDateDisplay = document.getElementById('current-date');
+const eventModal = document.getElementById('event-modal');
+const eventForm = document.getElementById('event-form');
+const eventDateInput = document.getElementById('event-date');
+const eventTitleInput = document.getElementById('event-title');
 
-let currentDate = new Date(); // Start with today's date
-let displayedDate = new Date(); // Controls the displayed month/year
+let events = []; // Store events
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
 
-// Generate the calendar for the displayed month
-function generateCalendar(date) {
-  const calendar = document.getElementById('calendar');
-  calendar.innerHTML = ''; // Clear previous content
+function generateCalendar(month, year) {
+  calendarGrid.innerHTML = '';
+  const firstDay = new Date(year, month).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-  const monthStart = startOfMonth(date);
-  const monthEnd = endOfMonth(date);
-
-  let currentWeekStart = startOfWeek(monthStart, { weekStartsOn: 1 });
-
-  while (currentWeekStart <= monthEnd) {
-    const weekDiv = document.createElement('div');
-    weekDiv.classList.add('week');
-
-    // Add each day of the week
-    for (let i = 0; i < 7; i++) {
-      const day = addDays(currentWeekStart, i);
-      const dayDiv = document.createElement('div');
-      dayDiv.classList.add('day');
-
-      // Highlight today's date
-      if (isToday(day)) {
-        dayDiv.classList.add('today');
-      }
-
-      dayDiv.innerHTML = `${format(day, 'EEE')}<br>${format(day, 'd')}`;
-      weekDiv.appendChild(dayDiv);
-    }
-
-    calendar.appendChild(weekDiv);
-    currentWeekStart = addWeeks(currentWeekStart, 1); // Move to the next week
+  for (let i = 0; i < firstDay; i++) {
+    calendarGrid.innerHTML += `<div></div>`;
   }
 
-  updateMonthYear(date);
-  scrollToCurrentWeek();
+  for (let day = 1; day <= daysInMonth; day++) {
+    const date = new Date(year, month, day);
+    const isToday =
+      date.toDateString() === new Date().toDateString()
+        ? 'current-day'
+        : '';
+
+    calendarGrid.innerHTML += `
+      <div class="${isToday}" onclick="openModal('${date.toISOString()}')">
+        ${day}
+      </div>`;
+  }
+
+  monthYearDisplay.textContent = new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' });
+  currentDateDisplay.textContent = new Date().toLocaleString('default', { month: 'long', day: 'numeric' });
 }
 
-// Update the month and year in the header
-function updateMonthYear(date) {
-  const monthYear = document.getElementById('monthYear');
-  monthYear.textContent = format(date, 'MMMM yyyy');
-}
-
-// Scroll to the current week
-function scrollToCurrentWeek() {
-  const calendar = document.querySelector('.calendar');
-  const weeks = document.querySelectorAll('.week');
-  const today = new Date();
-
-  weeks.forEach((week, index) => {
-    if (week.querySelector('.today')) {
-      const scrollAmount = index * calendar.offsetWidth;
-      calendar.scrollTo({ left: scrollAmount, behavior: 'smooth' });
-    }
-  });
-}
-
-// Navigate months
 function navigateMonth(direction) {
-  displayedDate = addWeeks(displayedDate, direction * 4); // Adjust displayed date
-  generateCalendar(displayedDate);
+  currentMonth += direction;
+  if (currentMonth < 0) {
+    currentMonth = 11;
+    currentYear--;
+  } else if (currentMonth > 11) {
+    currentMonth = 0;
+    currentYear++;
+  }
+  generateCalendar(currentMonth, currentYear);
 }
 
-// Scroll calendar horizontally
-function scrollCalendar(direction) {
-  const calendar = document.querySelector('.calendar');
-  const scrollAmount = calendar.offsetWidth; // Scroll by container's width
-  calendar.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+function openModal(date) {
+  eventDateInput.value = date.split('T')[0];
+  eventModal.style.display = 'block';
 }
 
-// Initialize the calendar
-generateCalendar(currentDate);
+function closeModal() {
+  eventModal.style.display = 'none';
+}
+
+eventForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const eventDate = eventDateInput.value;
+  const eventTitle = eventTitleInput.value;
+  events.push({ date: eventDate, title: eventTitle });
+  closeModal();
+});
+
+generateCalendar(currentMonth, currentYear);
