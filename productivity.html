@@ -11,16 +11,16 @@
         <div class="calendar-header">
             <img src = "images/SlideButton.png" class = "scroll-btn left" onclick="navigateMonth(-1)">
               <h2 id="monthYear"></h2>
-            <img src = "images/SlideButton.png" class = "scroll-btn right" onclick="navigateMonth(-1)">
+            <img src = "images/SlideButton.png" class = "scroll-btn right" onclick="navigateMonth(1)">
 
         </div>
-        
         <div class="calendar-container">
-            <img src = "images/SlideButton.png" class = "scroll-btn left" onclick="scrollCalendar(-1)">
-            <div class="calendar" id="calendar"></div>
-            <img src = "images/SlideButton.png" class = "scroll-btn right" onclick="scrollCalendar(1)">
-        </div>
+          <img src = "images/SlideButton.png" class = "scroll-btn left" onclick="scrollCalendar(-1)">
+          <div class="calendar" id="calendar"></div>
+          <img src = "images/SlideButton.png" class = "scroll-btn right" onclick="scrollCalendar(1)">
       </div>
+    </div>
+       
   <script src="https://cdn.jsdelivr.net/npm/date-fns@latest"></script>
   <script src="script.js"></script>
 </body>

@@ -11,19 +11,17 @@ body {
   }
 
   .calendar-header {
-    display: inline-block;
-    justify-content: center;
-    align-items: center;
+    display: flex; /* Flexbox to align items inline */
+    justify-content: center; /* Center the entire row */
+    align-items: center; /* Vertically align items */
     margin-bottom: 20px;
-    overflow: visible;
-  }
-  
-  .calendar-header h2 {
-    display: inline-block;
-    margin: 0 20px;
+}
+
+.calendar-header h2 {
     font-size: 1.5em;
     font-weight: bold;
-  }
+    text-align:center;
+}
   .calendar-container {
     display: flex;
     align-items: center;
@@ -31,6 +29,7 @@ body {
     width: 90%;
     max-width: 800px;
     overflow: visible;
+    
   }
   
   .calendar {
@@ -39,6 +38,7 @@ body {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none; /* Firefox */
+    
   }
   
   .calendar::-webkit-scrollbar {
@@ -68,25 +68,22 @@ body {
   }
   
   .scroll-btn {
-    position: relative;
-    transform: rotate(-5deg);
-    width: 40px;
-    height: auto;
+    width: 40px; /* Button width */
+    height: auto; /* Maintain aspect ratio */
     cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .scroll-btn.left {
-    left: -10px;
-    transform: rotate(180deg);
-  }
-  
-  .scroll-btn.right {
-    right: -10px;
-  }
-  
+    display: block; /* Ensure proper block-level rendering */
+    transform: rotate(-5deg); /* Slight tilt */
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.scroll-btn.left {
+    transform: rotate(180deg); /* Flip the left button */
+}
+
+.scroll-btn.right {
+    transform: none; /* Keep the right button upright */
+}
   .scroll-btn:hover {
     filter: brightness(75%);
   }
