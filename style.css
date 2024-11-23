@@ -13,20 +13,23 @@ body {
 
 /* Header */
 .header {
-  background-color: #FF3131;
-  color: white;
-  text-align: center;
+  background-color: #ffffff;
+  color: #FF3131;
+  text-align: left;
   padding: 4rem 2rem;
 }
 
 .main-title {
-  font-size: 3rem;
-  margin-bottom: 0.5rem;
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  line-height: 1;
   font-weight: 700; /* Bold for the main title */
 }
 
 .subheading {
   font-size: 1.5rem;
+  padding-bottom: 1rem;
+  color: #1b1b1b;
   margin-bottom: 1.5rem;
   font-weight: 300; /* Light for subheading */
 }
@@ -36,15 +39,22 @@ body {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   font-weight: 600; /* Semi-bold for buttons */
-  color: white;
-  background-color: black;
+  color: #1b1b1b;
+  border: 2px solid #FF3131;
+  background-color: #ffffff;
+  border-color: #1b1b1b;
   border-radius: 5px;
   text-decoration: none;
   transition: background-color 0.3s;
 }
 
+.br {
+  
+}
 .cta-button:hover {
-  background-color: #333;
+  background-color: #FF3131;
+  border-color: #FFFFFF;
+  color: #FFFFFF;
 }
 
 /* Sections */
@@ -101,3 +111,4 @@ section {
   width: 250px;
 
 }
+
