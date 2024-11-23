@@ -1,68 +1,99 @@
-const calendarGrid = document.getElementById('calendar-grid');
-const monthYearDisplay = document.getElementById('month-year');
-const currentDateDisplay = document.getElementById('current-date');
-const eventModal = document.getElementById('event-modal');
-const eventForm = document.getElementById('event-form');
-const eventDateInput = document.getElementById('event-date');
-const eventTitleInput = document.getElementById('event-title');
+const calendar = document.getElementById("calendar");
+const currentMonth = document.getElementById("current-month");
+const prevMonth = document.getElementById("prev-month");
+const nextMonth = document.getElementById("next-month");
 
-let events = []; // Store events
-let currentMonth = new Date().getMonth();
-let currentYear = new Date().getFullYear();
+const habitPopup = document.getElementById("habit-popup");
+const recordPopup = document.getElementById("record-popup");
+const addHabitBtn = document.getElementById("add-habit-btn");
+const recordHabitBtn = document.getElementById("record-habit-btn");
+const closePopup = document.getElementById("close-popup");
+const closeRecordPopup = document.getElementById("close-record-popup");
 
-function generateCalendar(month, year) {
-  calendarGrid.innerHTML = '';
-  const firstDay = new Date(year, month).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
+const habitList = document.getElementById("habit-list");
+const recordSelect = document.getElementById("record-habit-name");
 
-  for (let i = 0; i < firstDay; i++) {
-    calendarGrid.innerHTML += `<div></div>`;
-  }
+let habits = [];
+let date = new Date();
 
-  for (let day = 1; day <= daysInMonth; day++) {
-    const date = new Date(year, month, day);
-    const isToday =
-      date.toDateString() === new Date().toDateString()
-        ? 'current-day'
-        : '';
+function renderCalendar() {
+    calendar.innerHTML = "";
+    currentMonth.textContent = date.toLocaleString("default", { month: "long", year: "numeric" });
+    const firstDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+    const lastDate = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 
-    calendarGrid.innerHTML += `
-      <div class="${isToday}" onclick="openModal('${date.toISOString()}')">
-        ${day}
-      </div>`;
-  }
-
-  monthYearDisplay.textContent = new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' });
-  currentDateDisplay.textContent = new Date().toLocaleString('default', { month: 'long', day: 'numeric' });
+    // Fill days
+    for (let i = 0; i < firstDay; i++) calendar.innerHTML += `<div></div>`;
+    for (let d = 1; d <= lastDate; d++) {
+        const day = document.createElement("div");
+        day.textContent = d;
+        if (d === new Date().getDate() && date.getMonth() === new Date().getMonth()) {
+            day.classList.add("current-date");
+        }
+        calendar.appendChild(day);
+    }
 }
 
-function navigateMonth(direction) {
-  currentMonth += direction;
-  if (currentMonth < 0) {
-    currentMonth = 11;
-    currentYear--;
-  } else if (currentMonth > 11) {
-    currentMonth = 0;
-    currentYear++;
-  }
-  generateCalendar(currentMonth, currentYear);
+function openHabitPopup() {
+    habitPopup.classList.remove("hidden");
 }
 
-function openModal(date) {
-  eventDateInput.value = date.split('T')[0];
-  eventModal.style.display = 'block';
+function closeHabitPopup() {
+    habitPopup.classList.add("hidden");
 }
 
-function closeModal() {
-  eventModal.style.display = 'none';
+function addHabit() {
+    const name = document.getElementById("habit-name").value;
+    const goal = parseInt(document.getElementById("habit-goal").value);
+    if (name && goal) {
+        habits.push({ name, goal, done: 0 });
+        updateHabitList();
+        closeHabitPopup();
+    }
 }
 
-eventForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const eventDate = eventDateInput.value;
-  const eventTitle = eventTitleInput.value;
-  events.push({ date: eventDate, title: eventTitle });
-  closeModal();
+function updateHabitList() {
+    habitList.innerHTML = "";
+    recordSelect.innerHTML = "";
+    habits.forEach((habit, index) => {
+        const li = document.createElement("li");
+        li.textContent = `${habit.name} - ${habit.goal - habit.done} left`;
+        li.classList.add("status");
+        habitList.appendChild(li);
+
+        const option = document.createElement("option");
+        option.value = index;
+        option.textContent = habit.name;
+        recordSelect.appendChild(option);
+    });
+}
+
+function recordHabit() {
+    const habitIndex = parseInt(recordSelect.value);
+    const recordDate = new Date(document.getElementById("record-date").value);
+    if (habits[habitIndex]) {
+        habits[habitIndex].done += 1;
+        updateHabitList();
+    }
+    closeRecordPopup();
+}
+
+prevMonth.addEventListener("click", () => {
+    date.setMonth(date.getMonth() - 1);
+    renderCalendar();
 });
 
-generateCalendar(currentMonth, currentYear);
+nextMonth.addEventListener("click", () => {
+    date.setMonth(date.getMonth() + 1);
+    renderCalendar();
+});
+
+addHabitBtn.addEventListener("click", openHabitPopup);
+closePopup.addEventListener("click", closeHabitPopup);
+document.getElementById("save-habit").addEventListener("click", addHabit);
+
+recordHabitBtn.addEventListener("click", () => recordPopup.classList.remove("hidden"));
+document.getElementById("save-record").addEventListener("click", recordHabit);
+closeRecordPopup.addEventListener("click", () => recordPopup.classList.add("hidden"));
+
+renderCalendar();
