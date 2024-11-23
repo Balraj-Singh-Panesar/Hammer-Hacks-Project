@@ -71,7 +71,7 @@ function updateHabitList() {
 function recordHabit() {
     const habitIndex = parseInt(recordSelect.value);
     const recordDate = new Date(document.getElementById("record-date").value);
-    if (habits[habitIndex]) {
+    if (habits[habitIndex]){ 
         habits[habitIndex].done += 1;
         updateHabitList();
     }
