@@ -13,10 +13,16 @@ header {
   color: white;
   padding: 20px 0;
 }
-
-h1 {
+h1 a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
   margin: 0;
   font-size: 2.5rem;
+}
+
+h1:hover {
+  filter: brightness(75%);
 }
 
 p {
