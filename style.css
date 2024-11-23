@@ -34,6 +34,9 @@ body {
   font-weight: 300; /* Light for subheading */
 }
 
+a {
+  padding-left: 5px;
+}
 .cta-button {
   display: inline-block;
   padding: 0.75rem 1.5rem;
@@ -41,6 +44,8 @@ body {
   font-weight: 600; /* Semi-bold for buttons */
   color: #1b1b1b;
   border: 2px solid #FF3131;
+  padding-inline: 3rem;
+  margin-right: 10px;
   background-color: #ffffff;
   border-color: #1b1b1b;
   border-radius: 5px;
@@ -48,9 +53,6 @@ body {
   transition: background-color 0.3s;
 }
 
-.br {
-  
-}
 .cta-button:hover {
   background-color: #FF3131;
   border-color: #FFFFFF;
@@ -112,3 +114,21 @@ section {
 
 }
 
+.img-box {
+  width: 50%;
+  height: 80%;
+  position: absolute;
+  bottom: 185px;
+  right: 30px;
+}
+
+.img-box img {
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.page-transition {
+  width: 100%;
+  padding-bottom: 150px;
+}
